@@ -7,4 +7,6 @@
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
     <color name="colorAccent">#FF80AB</color>
+    <color name="facebook">#880000ff</color>
+    <color name="google">#60cf45</color>
 </resources>
