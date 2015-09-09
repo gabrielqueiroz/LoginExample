@@ -46,17 +46,21 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Login"
-            android:textColor="@color/textColor"
             android:id="@+id/loginButton"
-            android:layout_gravity="bottom" />
+            android:layout_gravity="bottom"
+            android:layout_margin="5dp"
+            android:textColor="@color/textColor"/>
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Registre Agora"
-            android:textColor="@color/textColor"
+            android:textColor="@color/facebook"
             android:id="@+id/registreButton"
-            android:layout_gravity="bottom" />
+            android:layout_gravity="bottom"
+            android:layout_margin="5dp"
+            android:background="@android:color/transparent"
+            style="?android:attr/borderlessButtonStyle"/>
 
     </LinearLayout>
 
