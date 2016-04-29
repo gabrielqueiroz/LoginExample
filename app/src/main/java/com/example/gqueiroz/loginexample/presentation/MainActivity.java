@@ -1,8 +1,7 @@
-package com.example.gqueiroz.loginexample;
+package com.example.gqueiroz.loginexample.presentation;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -11,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.example.gqueiroz.loginexample.R;
 
 import java.util.HashMap;
 
@@ -25,14 +26,8 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.loginText)
     EditText usuario;
 
-    @Bind(R.id.loginWatcher)
-    TextInputLayout loginWatcher;
-
     @Bind(R.id.passText)
     EditText pass;
-
-    @Bind(R.id.passWatcher)
-    TextInputLayout passWatcher;
 
     @Bind(R.id.loginButton)
     Button login;
