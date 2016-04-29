@@ -2,6 +2,7 @@ package com.example.gqueiroz.loginexample;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -24,8 +25,14 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.loginText)
     EditText usuario;
 
+    @Bind(R.id.loginWatcher)
+    TextInputLayout loginWatcher;
+
     @Bind(R.id.passText)
     EditText pass;
+
+    @Bind(R.id.passWatcher)
+    TextInputLayout passWatcher;
 
     @Bind(R.id.loginButton)
     Button login;
