@@ -1,8 +1,9 @@
 package com.example.gqueiroz.loginexample;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,12 +13,25 @@ import android.widget.Toast;
 
 import java.util.HashMap;
 
-public class MainActivity extends Activity {
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
-    private EditText usuario;
-    private EditText pass;
-    private Button login;
-    private Button registre;
+public class MainActivity extends AppCompatActivity {
+
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+
+    @Bind(R.id.loginText)
+    EditText usuario;
+
+    @Bind(R.id.passText)
+    EditText pass;
+
+    @Bind(R.id.loginButton)
+    Button login;
+
+    @Bind(R.id.registerButton)
+    Button registre;
 
     private HashMap<String, String> usuarios = new HashMap<>();
 
@@ -26,10 +40,10 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        usuario = (EditText)findViewById(R.id.loginText);
-        pass = (EditText)findViewById(R.id.passText);
+        ButterKnife.bind(this);
 
-        login = (Button)findViewById(R.id.loginButton);
+        setSupportActionBar(toolbar);
+
         login.setOnClickListener( new View.OnClickListener() {
              @Override
              public void onClick(View v) {
@@ -38,7 +52,6 @@ public class MainActivity extends Activity {
                      return;
                  }
                  if(usuarios.get(usuario.getText().toString()).equals(pass.getText().toString())){
-                 //if(usuario.getText().toString().equals("admin") && pass.getText().toString().equals("admin")){
                      Toast.makeText(getApplicationContext(), "Carregando...", Toast.LENGTH_SHORT).show();
                      Intent i = new Intent(MainActivity.this,HomeActivity.class);
                      String item = usuario.getText().toString();
@@ -49,12 +62,11 @@ public class MainActivity extends Activity {
          }
         );
 
-        registre = (Button)findViewById(R.id.registreButton);
         registre.setOnClickListener( new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Novo Usuário Registrado", Toast.LENGTH_SHORT).show();
-                usuarios.put(usuario.getText().toString(),pass.getText().toString());
+                Intent i = new Intent(MainActivity.this, RegistroActivity.class);
+                startActivity(i);
             }
         });
     }
@@ -62,7 +74,7 @@ public class MainActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        // getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 

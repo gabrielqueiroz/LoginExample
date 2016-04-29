@@ -2,37 +2,49 @@ package com.example.gqueiroz.loginexample;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.TextView;
 
-public class HomeActivity extends Activity {
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
-    private String value;
-    private TextView bemvindo;
+public class HomeActivity extends AppCompatActivity {
+
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+
+    @Bind(R.id.bemvindoLabel)
+    TextView bemvindo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        ButterKnife.bind(this);
+
+        setSupportActionBar(toolbar);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Home Activity");
+
         Bundle extras = getIntent().getExtras();
 
-        value = "";
+        String value = "";
         if(extras != null)
             value = extras.getString("item");
 
-        getActionBar().setTitle("News Feed");
-
-        bemvindo = (TextView)findViewById(R.id.bemvindoLabel);
-        bemvindo.setText("Bem vindo, "+value);
+        bemvindo.setText("Bem vindo, "+ value);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_home, menu);
+        // getMenuInflater().inflate(R.menu.menu_home, menu);
         return true;
     }
 
