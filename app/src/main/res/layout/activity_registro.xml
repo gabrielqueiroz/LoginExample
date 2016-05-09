@@ -33,7 +33,8 @@
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
 
             <EditText
                 android:id="@+id/sobrenomeInput"
@@ -96,10 +97,10 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="20dp"
-        android:src="@drawable/ic_action_add"
-        app:backgroundTint="@color/colorPrimary"
+        android:src="@drawable/ic_done_white_48dp"
         app:borderWidth="0dp"
         app:elevation="3dp"
-        app:rippleColor="@color/colorPrimary" />
+        app:backgroundTint="@color/colorPrimary"
+        app:rippleColor="@color/colorPrimaryDark" />
 
 </RelativeLayout>

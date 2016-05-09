@@ -1,26 +1,39 @@
 package com.example.gqueiroz.loginexample.model;
 
+
 import java.sql.Date;
+import java.util.Calendar;
+
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
 /**
  * Created by gabrielqueiroz on 4/28/16.
  */
-public class Usuario {
+public class Usuario extends RealmObject {
+
+    @PrimaryKey
+    private int id;
 
     private String nome;
     private String sobreNome;
-    private Date dataNasc;
+    private Calendar dataNasc;
     private String email;
     private String senha;
 
     public Usuario(){}
 
-    public Usuario(String nome, String sobreNome, Date dataNasc, String email, String senha) {
+    public Usuario(String nome, String sobreNome, Calendar dataNasc, String email, String senha) {
         this.nome = nome;
         this.sobreNome = sobreNome;
         this.dataNasc = dataNasc;
         this.email = email;
         this.senha = senha;
+    }
+
+    public Usuario id(int id){
+        this.id = id;
+        return this;
     }
 
     public Usuario nome(String nome){
@@ -33,7 +46,7 @@ public class Usuario {
         return this;
     }
 
-    public Usuario dataNasc(Date dataNasc){
+    public Usuario dataNasc(Calendar dataNasc){
         this.dataNasc = dataNasc;
         return this;
     }
@@ -46,6 +59,10 @@ public class Usuario {
     public Usuario senha(String senha){
         this.senha = senha;
         return this;
+    }
+
+    public int getId(){
+        return id;
     }
 
     public String getNome() {
@@ -64,11 +81,11 @@ public class Usuario {
         this.sobreNome = sobreNome;
     }
 
-    public Date getDataNasc() {
+    public Calendar getDataNasc() {
         return dataNasc;
     }
 
-    public void setDataNasc(Date dataNasc) {
+    public void setDataNasc(Calendar dataNasc) {
         this.dataNasc = dataNasc;
     }
 
@@ -91,7 +108,8 @@ public class Usuario {
     @Override
     public String toString() {
         return "Usuario{" +
-                "nome='" + nome + '\'' +
+                "id='" + id + '\'' +
+                ", nome='" + nome + '\'' +
                 ", sobreNome='" + sobreNome + '\'' +
                 ", dataNasc=" + dataNasc +
                 ", email='" + email + '\'' +

@@ -3,8 +3,10 @@ package com.example.gqueiroz.loginexample.presentation;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,21 +15,28 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.example.gqueiroz.loginexample.R;
+import com.example.gqueiroz.loginexample.model.Usuario;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.realm.Realm;
 
 public class RegistroActivity extends AppCompatActivity {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
-    @Bind(R.id.usuarioInput)
-    EditText usuarioInput;
+    @Bind(R.id.nomeInput)
+    EditText nomeInput;
+
+    @Bind(R.id.sobrenomeInput)
+    EditText sobrenomeInput;
 
     @Bind(R.id.emailInput)
     EditText emailInput;
@@ -38,8 +47,12 @@ public class RegistroActivity extends AppCompatActivity {
     @Bind(R.id.dataNasc)
     EditText dataNasc;
 
+    @Bind(R.id.fab)
+    FloatingActionButton floatingActionButton;
+
     private DatePickerDialog datePicker;
     private SimpleDateFormat dateFormatter;
+    private Calendar calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +63,6 @@ public class RegistroActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
 
-        dateFormatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         setDateTimeField();
 
         dataNasc.setOnClickListener(new View.OnClickListener() {
@@ -60,15 +72,22 @@ public class RegistroActivity extends AppCompatActivity {
                 datePicker.show();
             }
         });
+
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                createNewUser();
+            }
+        });
     }
 
     private void setDateTimeField() {
-        Calendar calendar = Calendar.getInstance();
+        calendar = Calendar.getInstance();
         datePicker = new DatePickerDialog(RegistroActivity.this, new DatePickerDialog.OnDateSetListener() {
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Calendar newDate = Calendar.getInstance();
-                newDate.set(year, monthOfYear, dayOfMonth);
-                dataNasc.setText(dateFormatter.format(newDate.getTime()));
+                calendar.set(year, monthOfYear, dayOfMonth);
+                dateFormatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                dataNasc.setText(dateFormatter.format(calendar.getTime()));
             }
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
     }
@@ -76,6 +95,28 @@ public class RegistroActivity extends AppCompatActivity {
     private void hideSoftKeyboard() {
         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         inputMethodManager.hideSoftInputFromWindow(dataNasc.getWindowToken(), 0);
+    }
+
+    private void createNewUser() {
+        Realm realm = Realm.getInstance(this.getApplicationContext());
+
+        int key;
+
+        try {
+            key = realm.where(Usuario.class).max("id").intValue() + 1;
+        } catch(ArrayIndexOutOfBoundsException ex) {
+            key = 0;
+        }
+
+        Usuario usuario = realm.createObject(Usuario.class)
+                .id(key)
+                .nome(nomeInput.getText().toString())
+                .sobreNome(sobrenomeInput.getText().toString())
+                .email(emailInput.getText().toString())
+                .senha(senhaInput.getText().toString())
+                .dataNasc(calendar);
+
+        realm.commitTransaction();
     }
 
     @Override

@@ -11,6 +11,7 @@ import com.example.gqueiroz.loginexample.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.realm.Realm;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -39,6 +40,8 @@ public class HomeActivity extends AppCompatActivity {
             value = extras.getString("item");
 
         bemvindo.setText("Bem vindo, "+ value);
+
+        Realm myRealm = Realm.getInstance(this.getApplicationContext());
     }
 
     @Override
