@@ -1,8 +1,7 @@
 package com.example.gqueiroz.loginexample.model;
 
 
-import java.sql.Date;
-import java.util.Calendar;
+import java.util.Date;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
@@ -17,52 +16,28 @@ public class Usuario extends RealmObject {
 
     private String nome;
     private String sobreNome;
-    private Calendar dataNasc;
+    private Date dataNasc;
     private String email;
     private String senha;
 
-    public Usuario(){}
-
-    public Usuario(String nome, String sobreNome, Calendar dataNasc, String email, String senha) {
-        this.nome = nome;
-        this.sobreNome = sobreNome;
-        this.dataNasc = dataNasc;
-        this.email = email;
-        this.senha = senha;
+    public Usuario() {
     }
 
-    public Usuario id(int id){
+    public Usuario(int id, String nome, String sobreNome, Date dataNasc, String email, String senha) {
         this.id = id;
-        return this;
-    }
-
-    public Usuario nome(String nome){
         this.nome = nome;
-        return this;
-    }
-
-    public Usuario sobreNome(String sobreNome){
         this.sobreNome = sobreNome;
-        return this;
-    }
-
-    public Usuario dataNasc(Calendar dataNasc){
         this.dataNasc = dataNasc;
-        return this;
-    }
-    
-    public Usuario email(String email){
         this.email = email;
-        return this;
-    }
-
-    public Usuario senha(String senha){
         this.senha = senha;
-        return this;
     }
 
-    public int getId(){
+    public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -81,11 +56,11 @@ public class Usuario extends RealmObject {
         this.sobreNome = sobreNome;
     }
 
-    public Calendar getDataNasc() {
+    public Date getDataNasc() {
         return dataNasc;
     }
 
-    public void setDataNasc(Calendar dataNasc) {
+    public void setDataNasc(Date dataNasc) {
         this.dataNasc = dataNasc;
     }
 
@@ -105,15 +80,4 @@ public class Usuario extends RealmObject {
         this.senha = senha;
     }
 
-    @Override
-    public String toString() {
-        return "Usuario{" +
-                "id='" + id + '\'' +
-                ", nome='" + nome + '\'' +
-                ", sobreNome='" + sobreNome + '\'' +
-                ", dataNasc=" + dataNasc +
-                ", email='" + email + '\'' +
-                ", senha='" + senha + '\'' +
-                '}';
-    }
 }

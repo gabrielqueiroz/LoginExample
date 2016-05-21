@@ -12,11 +12,16 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.gqueiroz.loginexample.R;
+import com.example.gqueiroz.loginexample.model.Usuario;
 
 import java.util.HashMap;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import io.realm.Realm;
+import io.realm.RealmQuery;
+import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,8 +40,6 @@ public class MainActivity extends AppCompatActivity {
     @Bind(R.id.registerButton)
     Button registre;
 
-    private HashMap<String, String> usuarios = new HashMap<>();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,17 +52,22 @@ public class MainActivity extends AppCompatActivity {
         login.setOnClickListener( new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 if(!usuarios.containsKey(usuario.getText().toString())){
-                     Toast.makeText(getApplicationContext(), "Credenciais Incorretas!", Toast.LENGTH_SHORT).show();
-                     return;
-                 }
-                 if(usuarios.get(usuario.getText().toString()).equals(pass.getText().toString())){
-                     Toast.makeText(getApplicationContext(), "Carregando...", Toast.LENGTH_SHORT).show();
-                     Intent i = new Intent(MainActivity.this,HomeActivity.class);
-                     String item = usuario.getText().toString();
-                     i.putExtra("item", item);
+                 Realm realm = Realm.getInstance(v.getContext());
+
+                 RealmResults<Usuario> query = realm.where(Usuario.class)
+                         .contains("email",usuario.getText().toString())
+                         .contains("senha",pass.getText().toString())
+                         .findAll();
+
+                 if(query.isEmpty()){
+                     Toast.makeText(v.getContext(),"Usuario nao cadastrado",Toast.LENGTH_LONG).show();
+                 } else {
+                     Toast.makeText(v.getContext(),"Carregando usuario",Toast.LENGTH_LONG).show();
+                     Intent i = new Intent(MainActivity.this, HomeActivity.class);
+                     i.putExtra("usuario", query.get(0).toString());
                      startActivity(i);
                  }
+
              }
          }
         );

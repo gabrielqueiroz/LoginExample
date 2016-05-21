@@ -2,10 +2,12 @@ package com.example.gqueiroz.loginexample.presentation;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -76,7 +78,15 @@ public class RegistroActivity extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (requiredField(nomeInput)
+                 || requiredField(emailInput)
+                 || requiredField(senhaInput)
+                 || requiredField(dataNasc))
+                    return;
+
                 createNewUser();
+                Intent i = new Intent(RegistroActivity.this, MainActivity.class);
+                startActivity(i);
             }
         });
     }
@@ -103,20 +113,36 @@ public class RegistroActivity extends AppCompatActivity {
         int key;
 
         try {
-            key = realm.where(Usuario.class).max("id").intValue() + 1;
-        } catch(ArrayIndexOutOfBoundsException ex) {
+            Number max = realm.where(Usuario.class).max("id");
+            key = max == null ? 0 : max.intValue() + 1;
+        } catch (ArrayIndexOutOfBoundsException ex) {
             key = 0;
         }
 
-        Usuario usuario = realm.createObject(Usuario.class)
-                .id(key)
-                .nome(nomeInput.getText().toString())
-                .sobreNome(sobrenomeInput.getText().toString())
-                .email(emailInput.getText().toString())
-                .senha(senhaInput.getText().toString())
-                .dataNasc(calendar);
+        Usuario usuario = new Usuario(
+                key,
+                nomeInput.getText().toString(),
+                sobrenomeInput.getText().toString(),
+                calendar.getTime(),
+                emailInput.getText().toString(),
+                senhaInput.getText().toString());
+
+        realm.beginTransaction();
+
+        realm.copyToRealm(usuario);
+
+        Log.i("INFO", "New User created: " + usuario.toString());
 
         realm.commitTransaction();
+    }
+
+    private boolean requiredField(EditText editText) {
+        if (TextUtils.isEmpty(editText.getText())) {
+            editText.setError("Campo obrigatorio");
+            editText.setFocusable(true);
+            return true;
+        }
+        return false;
     }
 
     @Override

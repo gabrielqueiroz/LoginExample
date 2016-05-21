@@ -35,13 +35,11 @@ public class HomeActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
 
-        String value = "";
+        String usuario = "";
         if(extras != null)
-            value = extras.getString("item");
+            usuario = extras.getString("usuario");
 
-        bemvindo.setText("Bem vindo, "+ value);
-
-        Realm myRealm = Realm.getInstance(this.getApplicationContext());
+        bemvindo.setText("Bem vindo, "+ usuario);
     }
 
     @Override

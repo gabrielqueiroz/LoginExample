@@ -9,8 +9,6 @@
         layout="@layout/layout_actionbar" />
 
     <TextView
-        android:text="Bem vindo, "
-        android:textSize="32dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/bemvindoLabel"
