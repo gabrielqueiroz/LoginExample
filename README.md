@@ -1,6 +1,6 @@
 # LoginExample
 
-* ** What can you find here? 
+* **What can you find here?**
 
 * Material Design example
 * Butterknife
